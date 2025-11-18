@@ -10,8 +10,17 @@ export default function RegisterPage() {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    localStorage.setItem("user", JSON.stringify(form));
-    alert("Cadastro realizado com sucesso!");
+    fetch("http://localhost:3100/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(form),
+    })
+      .then(res => res.json())
+      .then(() => alert("Cadastro realizado com sucesso!"))
+      .catch(() => alert("Erro ao cadastrar"));
+    
   };
 
   return (

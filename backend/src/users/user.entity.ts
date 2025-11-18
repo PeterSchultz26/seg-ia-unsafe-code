@@ -1,0 +1,22 @@
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+
+@Entity()
+export class User {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column()
+  nome: string;
+
+  @Column({ unique: true })
+  email: string;
+
+  @Column({ unique: true })
+  cpf: string;
+
+  @Column()
+  endereco: string;
+
+  @Column()
+  senha: string; // futuramente podemos hashear com bcrypt
+}

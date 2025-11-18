@@ -11,8 +11,23 @@ export default function LoginPage() {
     e.preventDefault();
     const user = JSON.parse(localStorage.getItem("user") || "{}");
     if (user.email === email && user.senha === senha) {
-      localStorage.setItem("logged", "true");
-      router.push("/shop");
+      fetch("http://localhost:3100/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, senha }),
+      })
+        .then(res => {
+          if (!res.ok) throw new Error("Login inválido");
+          return res.json();
+        })
+        .then(data => {
+          localStorage.setItem("logged", "true");
+          localStorage.setItem("user", JSON.stringify(data.user));
+          alert("Login realizado com sucesso!");
+          router.push("/shop");
+        })
+        .catch(() => alert("Email ou senha incorretos"));
+      
     } else {
       alert("Credenciais inválidas!");
     }
