@@ -10,7 +10,6 @@ export default function LoginPage() {
   const handleLogin = (e: any) => {
     e.preventDefault();
     const user = JSON.parse(localStorage.getItem("user") || "{}");
-    if (user.email === email && user.senha === senha) {
       fetch("http://localhost:3100/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -27,10 +26,6 @@ export default function LoginPage() {
           router.push("/shop");
         })
         .catch(() => alert("Email ou senha incorretos"));
-      
-    } else {
-      alert("Credenciais inválidas!");
-    }
   };
 
   return (
